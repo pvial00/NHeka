@@ -55,24 +55,6 @@ signatureMA, signatureMB = get_deck_signature(glyph_total4M, glyph_total8M)
 s = nearest_prime(signatureBB)
 print(signatureMB, s)
 
-p1A = pow(totalA, p, s)
-p1B = pow(totalA, q, s)
-
-print(p1A, p1B)
-
-p2A = pow(p1B, p, s)
-p2B = pow(p1A, q, s)
-print(p2A, p2B)
-
-p3A = pow(totalB, p, p2A)
-p3B = pow(totalB, q, p2B)
-print(p3A, p3B)
-
-p4A = pow(p3B, p, p2A)
-p4B = pow(p3A, q, p2B)
-print(p4A, p4B)
-print(totalA, totalB)
-
 sigSA = signatureMA % 26
 sigSB = signatureMB % 26
 print(sigSA, sigSB)
@@ -99,3 +81,6 @@ p4A = pow(p3B, p, p2A)
 p4B = pow(p3A, q, p2B)
 print(p4A, p4B)
 print(totalA, totalB)
+
+print(hexsigA, hexsigintA)
+print(hexsigB, hexsigintB)
