@@ -267,3 +267,17 @@ def export_deck(deck):
     for name in names:
         sys.stdout.write(name+" ")
     sys.stdout.write("\n")
+
+def FermatPrimeTest(n):
+    t = int(n / 2)
+    r = pow(t, (n - 1) , n)
+    if r == 1:
+        return True
+    else:
+        return False
+
+def nearest_prime(n):
+   p = n
+   while not FermatPrimeTest(p):
+       p += 1
+   return p
