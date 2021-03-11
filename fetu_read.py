@@ -1,11 +1,15 @@
 import os
+import sys
 from fetu_cards import *
 
 ''' KrypoMagick N Heka Fetu Cards version 'AAD' '''
 
 
 def main():
-    deck_obj_string = input("Enter deck object string: ")
+    deck_obj_string_file = sys.argv[1]
+    f = open(deck_obj_string_file, "r")
+    deck_obj_string = f.read()
+    f.close()
     deck_order = load_deck(deck_obj_string)
     hka_deck = generate_deck(deck_order)
     deck_msg = convert_deck_to_msg(hka_deck)
