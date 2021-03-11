@@ -26,5 +26,8 @@ def main():
     p = nearest_prime(signatureB)
     print(p)
 
+    hexsigA, hexsigintA = deck_to_hexstring(hka_deckA)
+    print(hexsigA, hexsigintA)
+
     
 main()
