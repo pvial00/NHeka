@@ -1,7 +1,7 @@
 import os
 from fetu_cards import *
 
-''' KrypoMagick N Heka Fetu Cards version 'AAB' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAC' '''
 
 
 hka_orderA = generate_random_deck_order()
@@ -71,3 +71,12 @@ print(p3A, p3B)
 p4A = pow(p3B, p, p2A)
 p4B = pow(p3A, q, p2B)
 print(p4A, p4B)
+print(totalA, totalB)
+
+sigSA = signatureMA % 26
+sigSB = signatureMB % 26
+print(sigSA, sigSB)
+
+hexsigA = deck_to_hexstring(hka_deckA)
+hexsigB = deck_to_hexstring(hka_deckB)
+print(hexsigA, hexsigB)

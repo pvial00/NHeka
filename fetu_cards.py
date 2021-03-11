@@ -1,7 +1,7 @@
 import os
 import sys
 
-''' KrypoMagick N Heka Fetu Cards version 'AAC' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAD' '''
 
 
 spade_value = 20
@@ -279,3 +279,11 @@ def nearest_prime(n):
    while not FermatPrimeTest(p):
        p += 1
    return p
+
+def deck_to_hexstring(deck):
+    glyphs, glyphs8, bin_sums4, bin_sum_total4, bin_sums8, bin_sum_total8 = get_fetu_glyphs(deck)
+    hex_arr = []
+    for v in bin_sums4:
+        hexv = hex(v)[2:]
+        hex_arr.append(hexv)
+    return "".join(hex_arr)

@@ -1,7 +1,7 @@
 import os
 from fetu_cards import *
 
-''' KrypoMagick N Heka Fetu Cards version 'AAC' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAD' '''
 
 
 def main():
