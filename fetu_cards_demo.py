@@ -32,3 +32,7 @@ print(glyphsA, glyphs8A, glyph_sums4A, glyph_total4A, glyph_sums8A, glyph_total8
 print(glyphsB, glyphs8B, glyph_sums4B, glyph_total4B, glyph_sums8B, glyph_total8B)
 export_deck(hka_deckA)
 export_deck(hka_deckB)
+
+p = nearest_prime(glyph_total4A)
+q = nearest_prime(glyph_total4B)
+print(p, q)
