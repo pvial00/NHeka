@@ -188,7 +188,7 @@ def get_deck_values(deck):
     ma_total = total % 26
     return values, total, ma_total
 
-def binary_sum(h):
+def binary_sum4bit(h):
     v = 0
     if h[0] == 1:
         v += 8
@@ -200,19 +200,57 @@ def binary_sum(h):
         v += 1
     return v
 
+def binary_sum8bit(h):
+    v = 0
+    if h[0] == 1:
+        v += 128
+    if h[1] == 1:
+        v += 64
+    if h[2] == 1:
+        v += 32
+    if h[3] == 1:
+        v += 16
+    if h[4] == 1:
+        v += 8
+    if h[5] == 1:
+        v += 4
+    if h[6] == 1:
+        v += 2
+    if h[7] == 1:
+        v += 1
+    return v
+
 def get_fetu_glyphs(deck):
     glyphs = []
-    bin_sums = []
-    bin_sum_total = 0
+    glyphs8 = []
+    bin_sums4 = []
+    bin_sums8 = []
+    bin_sum_total4 = 0
+    bin_sum_total8 = 0
     c = 0
+    j = 0
     for x in range(int(52 / 4)):
         symbol = []
         for i in range(4):
             g = deck[c].ma % 2
             symbol.append(g)
             c += 1
-        v = binary_sum(symbol)
-        bin_sums.append(v)
-        bin_sum_total += v
+        v = binary_sum4bit(symbol)
+        bin_sums4.append(v)
+        bin_sum_total4 += v
         glyphs.append(symbol)
-    return glyphs, bin_sums, bin_sum_total
+
+    for x in range(int(52 / 8)):
+        symbol8 = []
+        for i in range(8):
+            g = deck[j].ma % 2
+            symbol8.append(g)
+            j += 1
+        v8 = binary_sum4bit(symbol8)
+        bin_sums8.append(v8)
+        bin_sum_total8 += v8
+        glyphs8.append(symbol8)
+    return glyphs, glyphs8, bin_sums4, bin_sum_total4, bin_sums8, bin_sum_total8
+
+def get_fetu_binary_string(glyphs8):
+    return bin_string, bin_seq
