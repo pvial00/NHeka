@@ -33,6 +33,41 @@ print(glyphsB, glyphs8B, glyph_sums4B, glyph_total4B, glyph_sums8B, glyph_total8
 export_deck(hka_deckA)
 export_deck(hka_deckB)
 
-p = nearest_prime(glyph_total4A)
-q = nearest_prime(glyph_total4B)
+signatureAA, signatureAB = get_deck_signature(glyph_total4A, glyph_total8A)
+signatureBA, signatureBB = get_deck_signature(glyph_total4B, glyph_total8B)
+print(signatureAA, signatureAB)
+print(signatureBA, signatureBB)
+
+p = nearest_prime(signatureAB)
+q = nearest_prime(signatureBB)
 print(p, q)
+
+''' Modulus Deck '''
+
+hka_orderM = generate_random_deck_order()
+hka_deckM = generate_deck(hka_orderM)
+
+ma_valuesM, totalM, ma_totalM = get_deck_values(hka_deckM)
+glyphsM, glyphs8M, glyph_sums4M, glyph_total4M, glyph_sums8M, glyph_total8M = get_fetu_glyphs(hka_deckM)
+
+signatureMA, signatureMB = get_deck_signature(glyph_total4M, glyph_total8M)
+
+s = nearest_prime(signatureBB)
+print(signatureMB, s)
+
+p1A = pow(totalA, p, s)
+p1B = pow(totalA, q, s)
+
+print(p1A, p1B)
+
+p2A = pow(p1B, p, s)
+p2B = pow(p1A, q, s)
+print(p2A, p2B)
+
+p3A = pow(totalB, p, p2A)
+p3B = pow(totalB, q, p2B)
+print(p3A, p3B)
+
+p4A = pow(p3B, p, p2A)
+p4B = pow(p3A, q, p2B)
+print(p4A, p4B)

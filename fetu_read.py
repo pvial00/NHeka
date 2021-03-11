@@ -1,7 +1,7 @@
 import os
 from fetu_cards import *
 
-''' KrypoMagick N Heka Fetu Cards version 'AAB' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAC' '''
 
 
 def main():
@@ -20,4 +20,11 @@ def main():
     print(wiqa_seqFA, wiqa_seqBA, wiqa_seqBAB)
     print(glyphsA, glyphs8A, glyph_sums4A, glyph_total4A, glyph_sums8A, glyph_total8A)
 
+    signatureA, signatureB = get_deck_signature(glyph_total4A, glyph_total8A)
+    print(signatureA, signatureB)
+
+    p = nearest_prime(signatureB)
+    print(p)
+
+    
 main()

@@ -1,7 +1,7 @@
 import os
 import sys
 
-''' KrypoMagick N Heka Fetu Cards version 'AAB' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAC' '''
 
 
 spade_value = 20
@@ -148,10 +148,8 @@ def convert_to_msg(seq):
         msg.append(chr(num + 65))
     return "".join(msg)
 
-def get_deck_signature(deck):
-    signature = 0
-    for card in deck:
-        msg.append(chr(card.ma + 65))
+def get_deck_signature(glyph_total4, glyph_total8):
+    return (glyph_total4 + glyph_total8), ((glyph_total4 + 1) * (glyph_total8 + 1))
 
 def add_decks(decks):
     tmp = list(range(52))
