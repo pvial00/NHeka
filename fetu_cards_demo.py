@@ -81,3 +81,21 @@ hexsigA, hexsigintA = deck_to_hexstring(hka_deckA)
 hexsigB, hexsigintB = deck_to_hexstring(hka_deckB)
 print(hexsigA, hexsigintA)
 print(hexsigB, hexsigintB)
+
+p1A = pow(totalA, p, hexsigintA)
+p1B = pow(totalA, q, hexsigintA)
+
+print(p1A, p1B)
+
+p2A = pow(p1B, p, hexsigintA)
+p2B = pow(p1A, q, hexsigintA)
+print(p2A, p2B)
+
+p3A = pow(totalB, p, p2A)
+p3B = pow(totalB, q, p2B)
+print(p3A, p3B)
+
+p4A = pow(p3B, p, p2A)
+p4B = pow(p3A, q, p2B)
+print(p4A, p4B)
+print(totalA, totalB)
