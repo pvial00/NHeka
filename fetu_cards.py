@@ -286,4 +286,6 @@ def deck_to_hexstring(deck):
     for v in bin_sums4:
         hexv = hex(v)[2:]
         hex_arr.append(hexv)
-    return "".join(hex_arr)
+    hexstring = "".join(hex_arr)
+    sigint = int("0x"+hexstring, 0)
+    return hexstring, sigint

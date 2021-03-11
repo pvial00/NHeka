@@ -77,6 +77,7 @@ sigSA = signatureMA % 26
 sigSB = signatureMB % 26
 print(sigSA, sigSB)
 
-hexsigA = deck_to_hexstring(hka_deckA)
-hexsigB = deck_to_hexstring(hka_deckB)
-print(hexsigA, hexsigB)
+hexsigA, hexsigintA = deck_to_hexstring(hka_deckA)
+hexsigB, hexsigintB = deck_to_hexstring(hka_deckB)
+print(hexsigA, hexsigintA)
+print(hexsigB, hexsigintB)
