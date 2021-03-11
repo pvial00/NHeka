@@ -1,7 +1,7 @@
 import os
 from fetu_cards import *
 
-''' KrypoMagick N Heka Fetu Cards version 'AAA' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAB' '''
 
 
 hka_orderA = generate_random_deck_order()
@@ -30,3 +30,5 @@ print(ma_valuesB, totalB, ma_totalB)
 print(wiqa_seqFA, wiqa_seqBA, wiqa_seqBAB)
 print(glyphsA, glyphs8A, glyph_sums4A, glyph_total4A, glyph_sums8A, glyph_total8A)
 print(glyphsB, glyphs8B, glyph_sums4B, glyph_total4B, glyph_sums8B, glyph_total8B)
+export_deck(hka_deckA)
+export_deck(hka_deckB)
