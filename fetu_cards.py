@@ -378,7 +378,10 @@ def fetu_max_entropy(deck):
         hex_arr.append(hexv)
     max_hex = "".join(hex_arr)
     max_dec = int("0x"+max_hex, 0)
-    return binary_values, binary_total, max_hex, max_dec, fetu_total, fetu_totals
+    ovr_dec = pow(fetu_total, binary_total, max_dec)
+    ovr_dec_dbl = ovr_dec * 2
+    ovr_dec_dbl_hex = hex(ovr_dec_dbl)
+    return binary_values, binary_total, max_hex, max_dec, fetu_total, fetu_totals, ovr_dec, ovr_dec_dbl, ovr_dec_dbl_hex
 
 ''' Fetu Dice '''
 
