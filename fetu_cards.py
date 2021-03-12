@@ -1,7 +1,7 @@
 import os
 import sys
 
-''' KrypoMagick N Heka Fetu Cards version 'AAD' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAE' '''
 
 
 spade_value = 20
@@ -15,7 +15,13 @@ heka_deck_order_rev = {'QS':0, 'KS':1, 'JS':2, '10S':3, '9S':4, '8S':5, '7S':6, 
 
 heka_deck_values = [(0, 'QS'), (1, 'KS'), (2, 'JS'), (3, '10S'), (4, '9S'), (5, '8S'), (6, '7S'), (7, '6S'), (8, '5S'), (9, '4S'), (10, '3S'), (11, '2S'), (12, 'AS'), (13, 'QD'), (14, 'KD'), (15, 'JD'), (16, '10D'), (17, '9D'), (18, '8D'), (19, '7D'), (20, '6D'), (21, '5D'), (22, '4D'), (23, '3D'), (24, '2D'), (25, 'AD'), (0, 'QC'), (1, 'KC'), (2, 'JC'), (3, '10C'), (4, '9C'), (5, '8C'), (6, '7C'), (7, '6C'), (8, '5C'), (9, '4C'), (10, '3C'), (11, '2C'), (12, 'AC'), (13, 'QH'), (14, 'KH'), (15, 'JH'), (16, '10H'), (17, '9H'), (18, '8H'), (19, '7H'), (20, '6H'), (21, '5H'), (22, '4H'), (23, '3H'), (24, '2H'), (25, 'AH')]
 
-#heka_deck_fetu_values = [(81, 101, 'QS'), (81, 101, 'KS'), (81, 101, 'JS'), (3, '10S'), (81, 99, '9S'), (81, '8S'), (6, '7S'), (7, '6S'), (8, '5S'), (9, '4S'), (10, '3S'), (11, '2S'), (12, 'AS'), (13, 'QD'), (14, 'KD'), (15, 'JD'), (16, '10D'), (17, '9D'), (18, '8D'), (19, '7D'), (20, '6D'), (21, '5D'), (22, '4D'), (23, '3D'), (24, '2D'), (25, 'AD'), (0:'QC'), (1:'KC', (2:'JC'), (3, '10C'), (4, '9C'), (5, '8C'), (6, '7C'), (7, '6C'), (8, '5C'), (9, '4C'), (10, '3C'), (11, '2C'), (12, 'AC'), (13, 'QH'), (14, 'KH'), (15, 'JH'), (16, '10H'), (17, '9H'), (18, '8H'), (19, '7H'), (20, '6H'), (21, '5H'), (22, '4H'), (23, '3H'), (24, '2H'), (25, 'AH')}
+nheka_values = {'QS':16, 'KS':12, 'JS':11, '10S':10, '9S':9, '8S':8, '7S':7, '6S':6, '5S':5, '4S':4, '3S':3, '2S':2, 'AS':1, 'QD':16, 'KD':12, 'JD':11, '10D':10, '9D':9, '8D':8, '7D':7, '6D':6, '5D':5, '4D':4, '3D':3, '2D':2, 'AD':1, 'QC':16, 'KC':12, 'JC':11, '10C':10, '9C':9, '8C':8, '7C':7, '6C':6, '5C':5, '4C':4, '3C':3, '2C':2, 'AC':1, 'QH':16, 'KH':12, 'JH':11, '10H':10, '9H':9, '8H':8, '7H':7, '6H':6, '5H':5, '4H':4, '3H':3, '2H':2, 'AH':1}
+
+suit_values = {'S':20, 'D':4, 'C':10, 'H':8}
+
+fetu_value_symbol_counts =  {'QS':2, 'KS':2, 'JS':2, '10S':2, '9S':2, '8S':2, '7S':2, '6S':2, '5S':2, '4S':2, '3S':2, '2S':2, 'AS':2, 'QD':2, 'KD':2, 'JD':2, '10D':2, '9D':2, '8D':2, '7D':2, '6D':2, '5D':2, '4D':2, '3D':2, '2D':2, 'AD':2, 'QC':2, 'KC':2, 'JC':2, '10C':2, '9C':2, '8C':2, '7C':2, '6C':2, '5C':2, '4C':2, '3C':2, '2C':2, 'AC':2, 'QH':2, 'KH':2, 'JH':2, '10H':2, '9H':2, '8H':2, '7H':2, '6H':2, '5H':2, '4H':2, '3H':2, '2H':2, 'AH':2}
+
+fetu_suit_symbol_counts =  {'QS':4, 'KS':4, 'JS':4, '10S':12, '9S':11, '8S':10, '7S':9, '6S':8, '5S':7, '4S':6, '3S':5, '2S':4, 'AS':3, 'QD':4, 'KD':4, 'JD':4, '10D':12, '9D':11, '8D':10, '7D':9, '6D':8, '5D':7, '4D':6, '3D':5, '2D':4, 'AD':3, 'QC':4, 'KC':4, 'JC':4, '10C':12, '9C':11, '8C':10, '7C':9, '6C':8, '5C':7, '4C':6, '3C':5, '2C':4, 'AC':3, 'QH':4, 'KH':4, 'JH':4, '10H':12, '9H':11, '8H':10, '7H':9, '6H':8, '5H':7, '4H':6, '3H':5, '2H':4, 'AH':3}
 
 class Card(object):
     order = 0
@@ -44,17 +50,22 @@ def get_card_properties(card_name):
 
 def generate_deck(deck_order):
     deck = []
+    f = 1
     for x in range(len(deck_order)):
         card_order_number = deck_order[x]
         card_name = heka_deck_order[card_order_number]
         ma = heka_deck_values[card_order_number][0]
-        #fetu = heka_fetu_values[card_order_number]
         card = Card()
         card.order = card_order_number
-        #card.fetu = fetu
-        #card.nhk = nhk
         card.ma = ma
         card.name = card_name
+        sv = suit_values[card.name[len(card.name)-1:]]
+        nhk = nheka_values[card.name]
+        nsymbols_value = fetu_value_symbol_counts[card.name]
+        nsymbols_suit = fetu_suit_symbol_counts[card.name]
+        fetu = ((nsymbols_suit*nsymbols_value*sv*nhk) + f)
+        card.nhk = nhk
+        card.fetu = fetu
         deck.append(card)
     return deck
 
@@ -130,7 +141,7 @@ def wiqa_sequence_backB(deck, i=26):
     return "".join(ctxt)
 
 def print_card(card):
-    print(card.name, card.order, card.fetu, card.ma)
+    print(card.name, card.order, card.ma, card.nhk, card.fetu)
 
 def print_deck(deck):
     for card in deck:
@@ -289,3 +300,89 @@ def deck_to_hexstring(deck):
     hexstring = "".join(hex_arr)
     sigint = int("0x"+hexstring, 0)
     return hexstring, sigint
+
+def get_magic_word(deck, length=5):
+    mw = length * [0]
+    for card in deck:
+        c = card
+    return magic_word
+
+def generate_random_artifact():
+    deck_order = generate_random_deck_order()
+    deck = generate_deck(deck_order)
+    artifactA, artifactB = deck_to_hexstring(deck)
+    return artifactA, artifactB
+
+def generate_rsa_modulus(hexstringP, hexstringQ):
+    ''' Recommended Source Entropy for each hex string is 1040 bits '''
+    p = int("0x"+hexstringP, 0)
+    q = int("0x"+hexstringq, 0)
+    n = p * q
+    t = ((p - 1) * (q - 1))
+    return n
+    
+def fetu_sign(source, modulus):
+    artifactA, artifactB = generate_random_artifact()
+    signature = pow(source, artifactB, modulus)
+    return signature, artifactB
+
+def fetu_verify(signature, artifact, public_key):
+    return None
+
+def generate_reader_source_modulus(source_hexstring):
+    hex_arr = []
+    for v in bin_sums4:
+        hexv = hex(v)[2:]
+        hex_arr.append(hexv)
+    hexstring = "".join(hex_arr)
+    source_int = int("0x"+hexstring, 0)
+    return None
+
+def random_order(o):
+    arr = []
+    while len(arr) != o:
+        n = ord(os.urandom(1)) % o
+        if n not in arr:
+           arr.append(n)
+    return arr
+
+def add_orders(a, b):
+    tmp = 52 * [0]
+    order = []
+    for x in range(52):
+        tmp[x] = (a[x] + b[x]) % 52
+    return tmp
+
+def subtract_ordersA(a, b):
+    tmp = 52 * [0]
+    order = []
+    for x in range(52):
+        tmp[x] = (a[x] - b[x]) % 52
+    return tmp
+
+''' Fetu Dice '''
+
+def random_value(i, m):
+    arr = []
+    while len(arr) != i:
+        n = ord(os.urandom(1)) % m
+        if n not in arr:
+           arr.append(n)
+    return arr
+
+def roll_d100():
+    d0 = random_value(1, 10)
+    d1 = random_value(1, 10)
+    return (d0 + d1)
+
+def roll_d30():
+    d0 = random_value(1, 30)
+    return d0
+
+def fetu_roll(modulus, i):
+    arr = []
+    while len(arr) != i:
+        r = roll_d30()
+        if r <= modulus:
+            arr.append(r)
+    return arr

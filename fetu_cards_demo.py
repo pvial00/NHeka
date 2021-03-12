@@ -1,7 +1,7 @@
 import os
 from fetu_cards import *
 
-''' KrypoMagick N Heka Fetu Cards version 'AAC' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAE' '''
 
 
 hka_orderA = generate_random_deck_order()

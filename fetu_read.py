@@ -2,7 +2,7 @@ import os
 import sys
 from fetu_cards import *
 
-''' KrypoMagick N Heka Fetu Cards version 'AAD' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAE' '''
 
 
 def main():
@@ -18,20 +18,27 @@ def main():
     wiqa_seqFA = wiqa_sequence_forward(hka_deck)
     wiqa_seqBA = wiqa_sequence_backA(hka_deck)
     wiqa_seqBAB = wiqa_sequence_backB(hka_deck)
+    print("KrypoMagick Fetu Deck Report")
+    print("Fetu Deck:")
     print_deck(hka_deck)
-    print(deck_msg)
+    print("Fetu Deck Phrase:", deck_msg)
+    print("Fetu Moon Arithmetic (Values, Total MA Total): ")
     print(ma_values, total, ma_total)
+    print("Fetu Wiqa Sequences: ")
     print(wiqa_seqFA, wiqa_seqBA, wiqa_seqBAB)
-    print(glyphsA, glyphs8A, glyph_sums4A, glyph_total4A, glyph_sums8A, glyph_total8A)
+    print("Fetu Binary Sequences: ")
+    print(glyphsA, glyph_sums4A, glyph_total4A)
 
     signatureA, signatureB = get_deck_signature(glyph_total4A, glyph_total8A)
+    print("Fetu Signatures (A/B): ")
     print(signatureA, signatureB)
 
     p = nearest_prime(signatureB)
+    print("Nearest prime to Signature B: ")
     print(p)
 
     hexsigA, hexsigintA = deck_to_hexstring(hka_deck)
+    print("Fetu Hex/Binary Signatures: ")
     print(hexsigA, hexsigintA)
-
     
 main()
