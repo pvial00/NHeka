@@ -42,12 +42,13 @@ def main():
     print(hexsigA, hexsigintA)
     print("\n")
 
-    max_bin, max_hex, max_dec, fetu_total, fetu_totals = fetu_max_entropy(hka_deck)
+    max_bin, bin_total, max_hex, max_dec, fetu_total, fetu_totals = fetu_max_entropy(hka_deck)
     print("Max Entropy Function Report --- ")
     print("--- 416 bit entropy extraction --- ")
     print("Hex String: ", max_hex)
     print("Decimal String: ", str(max_dec))
     print("Max Entropy Binary Values: "+str(max_bin))
+    print("Max Entropy Binary Total: "+str(bin_total))
     print("Fetu Total: ", str(fetu_total))
     print("Fetu Totals: ", str(fetu_totals))
     

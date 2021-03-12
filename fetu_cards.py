@@ -364,21 +364,21 @@ def fetu_max_entropy(deck):
     fetu_total = 0
     fetu_totals = []
     binary_values = []
-    max_dec = 0
+    binary_total = 0
     for card in deck:
         i = (card.fetu + card.order)
         fetu_totals.append(i)
         m = i % 256
         binary_values.append(m)
-        max_dec += m
+        binary_total += m
         fetu_total += i
     hex_arr = []
     for v in binary_values:
         hexv = hex(v)[2:]
         hex_arr.append(hexv)
-    hexstring = "".join(hex_arr)
-    max_hex = int("0x"+hexstring, 0)
-    return binary_values, max_hex, max_dec, fetu_total, fetu_totals
+    max_hex = "".join(hex_arr)
+    max_dec = int("0x"+max_hex, 0)
+    return binary_values, binary_total, max_hex, max_dec, fetu_total, fetu_totals
 
 ''' Fetu Dice '''
 
