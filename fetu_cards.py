@@ -1,7 +1,7 @@
 import os
 import sys
 
-''' KrypoMagick N Heka Fetu Cards version 'AAF' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAG' '''
 
 
 spade_value = 20
@@ -364,16 +364,21 @@ def fetu_max_entropy(deck):
     fetu_total = 0
     fetu_totals = []
     binary_values = []
+    binary_values_dbl = []
     binary_total = 0
+    binary_total_dbl = 0
     for card in deck:
         i = (card.fetu + card.order)
         fetu_totals.append(i)
-        m = i % 256
+        m = (i + 1) & 0xFF
         binary_values.append(m)
+        n = (i + 1) % 0xFFFF
+        binary_values_dbl.append(n)
         binary_total += m
+        binary_total_dbl += n
         fetu_total += i
     hex_arr = []
-    for v in binary_values:
+    for v in binary_values_dbl:
         hexv = hex(v)[2:]
         hex_arr.append(hexv)
     max_hex = "".join(hex_arr)
@@ -381,7 +386,14 @@ def fetu_max_entropy(deck):
     ovr_dec = pow(fetu_total, binary_total, max_dec)
     ovr_dec_dbl = ovr_dec * 2
     ovr_dec_dbl_hex = hex(ovr_dec_dbl)
-    return binary_values, binary_total, max_hex, max_dec, fetu_total, fetu_totals, ovr_dec, ovr_dec_dbl, ovr_dec_dbl_hex
+    hex_arr = []
+    for v in binary_values_dbl:
+        hexv = hex(v)[2:]
+        hex_arr.append(hexv)
+    max_squeeze_hex = "".join(hex_arr)
+    max_squeeze_dec_tmp = str(int("0x"+max_hex, 0) * (max_dec + 1))
+    max_squeeze_dec = int(max_squeeze_dec_tmp[:len(max_squeeze_dec_tmp)-1])
+    return binary_values, binary_total, max_hex, max_dec, fetu_total, fetu_totals, ovr_dec, ovr_dec_dbl, ovr_dec_dbl_hex, max_squeeze_dec, max_squeeze_hex
 
 ''' Fetu Dice '''
 

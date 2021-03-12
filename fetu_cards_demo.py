@@ -1,7 +1,7 @@
 import os
 from fetu_cards import *
 
-''' KrypoMagick N Heka Fetu Cards version 'AAF' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAG' '''
 
 
 hka_orderA = generate_random_deck_order()
@@ -85,8 +85,8 @@ print(totalA, totalB)
 print(hexsigA, hexsigintA)
 print(hexsigB, hexsigintB)
 
-max_binA, bin_totalA, max_hexA, max_decA, fetu_totalA, fetu_totalsA, ovr_decA, ovr_dec_dblA, ovr_dec_dbl_hexA = fetu_max_entropy(hka_deckA)
-max_binB, bin_totalB, max_hexB, max_decB, fetu_totalB, fetu_totalsB, ovr_decB, ovr_dec_dblB, ovr_dec_dbl_hexB = fetu_max_entropy(hka_deckB)
+max_binA, bin_totalA, max_hexA, max_decA, fetu_totalA, fetu_totalsA, ovr_decA, ovr_dec_dblA, ovr_dec_dbl_hexA, max_squeeze_decA, max_squeeze_hexA = fetu_max_entropy(hka_deckA)
+max_binB, bin_totalB, max_hexB, max_decB, fetu_totalB, fetu_totalsB, ovr_decB, ovr_dec_dblB, ovr_dec_dbl_hexB, max_squeeze_decB, max_squeeze_hexB = fetu_max_entropy(hka_deckB)
 print("Max Entropy Function Report --- ")
 print("--- 416 bit entropy extraction --- ")
 print("Hex String: ", max_hexA)
@@ -98,6 +98,8 @@ print("Fetu Totals: ", str(fetu_totalsA))
 print("Overdrive Decimal: ", str(ovr_decA))
 print("Overdrive Decimal Double: ", str(ovr_dec_dblA))
 print("Overdrive Double Hex String: ", str(ovr_dec_dbl_hexA))
+print("Max Squeeze Decimal: ", str(max_squeeze_decB))
+print("Max Squeeze Hex String: ", str(max_squeeze_hexB))
 print("\n")
 print("Hex String: ", max_hexB)
 print("Decimal String: ", str(max_decB))
@@ -108,3 +110,6 @@ print("Fetu Totals: ", str(fetu_totalsB))
 print("Overdrive Decimal: ", str(ovr_decB))
 print("Overdrive Decimal Double: ", str(ovr_dec_dblB))
 print("Overdrive Double Hex String: ", str(ovr_dec_dbl_hexB))
+print("Max Squeeze Decimal: ", str(max_squeeze_decB))
+print("Max Squeeze Hex String: ", str(max_squeeze_hexB))
+print((((len(max_squeeze_hexB) - 2) / 2) * 8))

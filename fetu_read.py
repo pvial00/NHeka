@@ -2,7 +2,7 @@ import os
 import sys
 from fetu_cards import *
 
-''' KrypoMagick N Heka Fetu Cards version 'AAF' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAG' '''
 
 
 def main():
@@ -42,7 +42,7 @@ def main():
     print(hexsigA, hexsigintA)
     print("\n")
 
-    max_bin, bin_total, max_hex, max_dec, fetu_total, fetu_totals, ovr_dec, ovr_dec_dbl, ovr_dec_dbl_hex = fetu_max_entropy(hka_deck)
+    max_bin, bin_total, max_hex, max_dec, fetu_total, fetu_totals, ovr_dec, ovr_dec_dbl, ovr_dec_dbl_hex, max_squeeze_dec, max_squeeze_hex, super_max_dec, super_max_hex = fetu_max_entropy(hka_deck)
     print("Max Entropy Function Report --- ")
     print("--- 416 bit entropy extraction --- ")
     print("Hex String: ", max_hex)
@@ -54,5 +54,8 @@ def main():
     print("Overdrive Decimal: ", str(ovr_dec))
     print("Overdrive Decimal Double: ", str(ovr_dec_dbl))
     print("Overdrive Double Hex String: ", str(ovr_dec_dbl_hex))
-    
+    print("Max Squeeze Decimal: ", str(max_squeeze_dec))
+    print("Max Squeeze Hex String: ", str(max_squeeze_hex))
+    print("Super Max Squeeze Decimal: ", str(super_max_dec))
+    print("Super Max Squeeze Hex String: ", str(super_max_hex))
 main()
