@@ -1,7 +1,7 @@
 import os
 import sys
 
-''' KrypoMagick N Heka Fetu Cards version 'AAE' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAF' '''
 
 
 spade_value = 20
@@ -359,6 +359,26 @@ def subtract_ordersA(a, b):
     for x in range(52):
         tmp[x] = (a[x] - b[x]) % 52
     return tmp
+
+def fetu_max_entropy(deck):
+    fetu_total = 0
+    fetu_totals = []
+    binary_values = []
+    max_dec = 0
+    for card in deck:
+        i = (card.fetu + card.order)
+        fetu_totals.append(i)
+        m = i % 256
+        binary_values.append(m)
+        max_dec += m
+        fetu_total += i
+    hex_arr = []
+    for v in binary_values:
+        hexv = hex(v)[2:]
+        hex_arr.append(hexv)
+    hexstring = "".join(hex_arr)
+    max_hex = int("0x"+hexstring, 0)
+    return binary_values, max_hex, max_dec, fetu_total, fetu_totals
 
 ''' Fetu Dice '''
 

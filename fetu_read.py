@@ -2,7 +2,7 @@ import os
 import sys
 from fetu_cards import *
 
-''' KrypoMagick N Heka Fetu Cards version 'AAE' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAF' '''
 
 
 def main():
@@ -40,5 +40,15 @@ def main():
     hexsigA, hexsigintA = deck_to_hexstring(hka_deck)
     print("Fetu Hex/Binary Signatures: ")
     print(hexsigA, hexsigintA)
+    print("\n")
+
+    max_bin, max_hex, max_dec, fetu_total, fetu_totals = fetu_max_entropy(hka_deck)
+    print("Max Entropy Function Report --- ")
+    print("--- 416 bit entropy extraction --- ")
+    print("Hex String: ", max_hex)
+    print("Decimal String: ", str(max_dec))
+    print("Max Entropy Binary Values: "+str(max_bin))
+    print("Fetu Total: ", str(fetu_total))
+    print("Fetu Totals: ", str(fetu_totals))
     
 main()

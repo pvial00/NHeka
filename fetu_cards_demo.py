@@ -1,7 +1,7 @@
 import os
 from fetu_cards import *
 
-''' KrypoMagick N Heka Fetu Cards version 'AAE' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAF' '''
 
 
 hka_orderA = generate_random_deck_order()
@@ -84,3 +84,19 @@ print(totalA, totalB)
 
 print(hexsigA, hexsigintA)
 print(hexsigB, hexsigintB)
+
+max_binA, max_hexA, max_decA, fetu_totalA, fetu_totalsA = fetu_max_entropy(hka_deckA)
+max_binB, max_hexB, max_decB, fetu_totalB, fetu_totalsB = fetu_max_entropy(hka_deckB)
+print("Max Entropy Function Report --- ")
+print("--- 416 bit entropy extraction --- ")
+print("Hex String: ", max_hexA)
+print("Decimal String: ", str(max_decA))
+print("Max Entropy Binary Values: "+str(max_binA))
+print("Fetu Total: ", str(fetu_totalA))
+print("Fetu Totals: ", str(fetu_totalsA))
+print("\n")
+print("Hex String: ", max_hexB)
+print("Decimal String: ", str(max_decB))
+print("Max Entropy Binary Values: "+str(max_binB))
+print("Fetu Total: ", str(fetu_totalB))
+print("Fetu Totals: ", str(fetu_totalsB))
