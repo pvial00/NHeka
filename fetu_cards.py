@@ -1,7 +1,7 @@
 import os
 import sys
 
-''' KrypoMagick N Heka Fetu Cards version 'AAG' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAH' '''
 
 
 spade_value = 20
@@ -19,6 +19,8 @@ nheka_values = {'QS':16, 'KS':12, 'JS':11, '10S':10, '9S':9, '8S':8, '7S':7, '6S
 
 suit_values = {'S':20, 'D':4, 'C':10, 'H':8}
 
+suit_binary_values = {'S':0, 'D':1, 'C':0, 'H':1}
+
 fetu_value_symbol_counts =  {'QS':2, 'KS':2, 'JS':2, '10S':2, '9S':2, '8S':2, '7S':2, '6S':2, '5S':2, '4S':2, '3S':2, '2S':2, 'AS':2, 'QD':2, 'KD':2, 'JD':2, '10D':2, '9D':2, '8D':2, '7D':2, '6D':2, '5D':2, '4D':2, '3D':2, '2D':2, 'AD':2, 'QC':2, 'KC':2, 'JC':2, '10C':2, '9C':2, '8C':2, '7C':2, '6C':2, '5C':2, '4C':2, '3C':2, '2C':2, 'AC':2, 'QH':2, 'KH':2, 'JH':2, '10H':2, '9H':2, '8H':2, '7H':2, '6H':2, '5H':2, '4H':2, '3H':2, '2H':2, 'AH':2}
 
 fetu_suit_symbol_counts =  {'QS':4, 'KS':4, 'JS':4, '10S':12, '9S':11, '8S':10, '7S':9, '6S':8, '5S':7, '4S':6, '3S':5, '2S':4, 'AS':3, 'QD':4, 'KD':4, 'JD':4, '10D':12, '9D':11, '8D':10, '7D':9, '6D':8, '5D':7, '4D':6, '3D':5, '2D':4, 'AD':3, 'QC':4, 'KC':4, 'JC':4, '10C':12, '9C':11, '8C':10, '7C':9, '6C':8, '5C':7, '4C':6, '3C':5, '2C':4, 'AC':3, 'QH':4, 'KH':4, 'JH':4, '10H':12, '9H':11, '8H':10, '7H':9, '6H':8, '5H':7, '4H':6, '3H':5, '2H':4, 'AH':3}
@@ -30,6 +32,7 @@ class Card(object):
     ma = 0
     name = "Card"
     suit_value = 0
+    bin_value = 0
 
 def get_card_properties(card_name):
     if len(card_name) == 2:
@@ -66,6 +69,7 @@ def generate_deck(deck_order):
         fetu = ((nsymbols_suit*nsymbols_value*sv*nhk) + f)
         card.nhk = nhk
         card.fetu = fetu
+        card.bin_value = suit_binary_values[card.name[len(card.name)-1:]]
         deck.append(card)
     return deck
 
@@ -84,6 +88,26 @@ def wiqa_keysetup(deck):
         k[c] = (k[c] + card.ma) % 26
         j = (j + card.ma) % 26
         c = (c + 1) % 26
+    return k, j
+
+def wiqa_standard_keysetup(key):
+    k = [0] * 26
+    j = 0
+    c = 0
+    for char in key:
+        k[c] = (k[c] + (ord(char) - 65)) % 26
+        j = (j + (ord(char) - 65)) % 26
+        c = (c + 1) % 26
+    return k, j
+
+def wiqa_binary_keysetup(key):
+    k = [0] * 256
+    j = 0
+    c = 0
+    for char in key:
+        k[c] = (k[c] + (ord(char) - 65)) & 0xFF
+        j = (j + (ord(char) - 65)) & 0xFF
+        c = (c + 1) & 0xFF
     return k, j
 
 def wiqa_sequence_forward(deck, i=26):
@@ -140,6 +164,24 @@ def wiqa_sequence_backB(deck, i=26):
         c = (c + 1) % 26
     return "".join(ctxt)
 
+def wiqa_binary_encrypt(text, key):
+    j = 0
+    ctxt = []
+    c = 0
+    k, j = wiqa_standard_keysetup(key)
+    output = []
+    for x in range(i):
+        j = k[j]
+        k[j] = (k[j] - k[c]) & 0xFF
+        o = (k[j] + k[k[j]]) & 0xFF
+        output.append(o)
+
+    for o in output:
+        sub = (o + (ord(text[c]) - 65)) & 0xFF
+        ctxt.append(chr(sub + 65))
+        c = (c + 1) & 0xFF
+    return "".join(ctxt)
+
 def print_card(card):
     print(card.name, card.order, card.ma, card.nhk, card.fetu)
 
@@ -194,6 +236,14 @@ def get_deck_values(deck):
     ma_total = total % 26
     return values, total, ma_total
 
+def binary_sum2bit(h):
+    v = 0
+    if h[0] == 1:
+        v += 2
+    if h[1] == 1:
+        v += 1
+    return v
+
 def binary_sum4bit(h):
     v = 0
     if h[0] == 1:
@@ -238,25 +288,14 @@ def get_fetu_glyphs(deck):
     for x in range(int(52 / 4)):
         symbol = []
         for i in range(4):
-            g = deck[c].ma % 2
+            g = deck[c].bin_value
             symbol.append(g)
             c += 1
         v = binary_sum4bit(symbol)
         bin_sums4.append(v)
         bin_sum_total4 += v
         glyphs.append(symbol)
-
-    for x in range(int(52 / 8)):
-        symbol8 = []
-        for i in range(8):
-            g = deck[j].ma % 2
-            symbol8.append(g)
-            j += 1
-        v8 = binary_sum4bit(symbol8)
-        bin_sums8.append(v8)
-        bin_sum_total8 += v8
-        glyphs8.append(symbol8)
-    return glyphs, glyphs8, bin_sums4, bin_sum_total4, bin_sums8, bin_sum_total8
+    return glyphs, bin_sums4, bin_sum_total4
 
 def get_fetu_binary_string(glyphs8):
     return bin_string, bin_seq
@@ -292,7 +331,7 @@ def nearest_prime(n):
    return p
 
 def deck_to_hexstring(deck):
-    glyphs, glyphs8, bin_sums4, bin_sum_total4, bin_sums8, bin_sum_total8 = get_fetu_glyphs(deck)
+    glyphs, bin_sums4, bin_sum_total4 = get_fetu_glyphs(deck)
     hex_arr = []
     for v in bin_sums4:
         hexv = hex(v)[2:]
@@ -391,9 +430,77 @@ def fetu_max_entropy(deck):
         hexv = hex(v)[2:]
         hex_arr.append(hexv)
     max_squeeze_hex = "".join(hex_arr)
-    max_squeeze_dec_tmp = str(int("0x"+max_hex, 0) * (max_dec + 1))
-    max_squeeze_dec = int(max_squeeze_dec_tmp[:len(max_squeeze_dec_tmp)-1])
+    max_squeeze_dec_tmp = str(int("0x"+max_hex, 0))
+    #max_squeeze_dec_tmp = str(int("0x"+max_hex, 0) * (max_dec + 1))
+    max_squeeze_dec = int(max_squeeze_dec_tmp[0:len(max_squeeze_dec_tmp)-1])
+    max_squeeze_hex = hex(max_squeeze_dec)[2:]
     return binary_values, binary_total, max_hex, max_dec, fetu_total, fetu_totals, ovr_dec, ovr_dec_dbl, ovr_dec_dbl_hex, max_squeeze_dec, max_squeeze_hex
+
+def fetu_dh(vector, public_key, common_modulus):
+    return pow(vector, public_key, common_modulus)
+
+def get_binary_message(deck):
+    positions = [0] * 52
+    bin_values = []
+    for card in deck:
+        bin_values.append(card.bin_value)
+    
+    order = []
+    step = 0
+    for x in range(int(52 / 2)):
+        bite = bin_values[step:step+2]
+        step += 2
+        if bite[0] > bite[1]:
+            order.append(0)
+            order.append(0)
+        else:
+            order.append(1)
+            order.append(1)
+    for x in range(52):
+        order[x] = order[x] ^ bin_values[x]
+    bin_sum = binary_sum4bit(bin_values)
+    bin_sum_hex = hex(bin_sum)
+    return bin_sum, bin_sum_hex
+
+def get_fetu_binary_message(deck):
+    positions = [0] * 52
+    bin_values = []
+    bin_sums = []
+    n = 0
+    bin_sum = 0
+    bin_total = 0
+    binary_message = b''
+    bin_sum_hexstring = ""
+    for card in deck:
+        value = [0, 0]
+        value[0] = card.bin_value
+        if card.ma % 2 == 1:
+            value[1] == 1
+        x = (value[0] ^ value[1] ^ n)
+        n = (n + 1) & 0x01
+        bin_values.append(x)
+    s = 0
+    e = 4
+    s2 = 4
+    e2 = 8
+    _bin_values = bin_values[:len(bin_values)-1]
+    for x in range(int(12 / 2)):
+        value1 = bin_values[s:e]
+        value2 = bin_values[s2:e2]
+        value = value1 + value2
+        s += 4
+        e += 4
+        s2 += 4
+        e2 += 4
+        _sum = binary_sum8bit(value)
+        bin_sums.append(_sum)
+        bin_sum += _sum
+        binary_message += bytes(str(_sum), encoding="ascii")
+        bin_sum_hexstring += hex(_sum)[2:]
+    return bin_sum, bin_sum_hexstring, binary_message
+
+def fetu_binary_prng(bin_sum_stream, max_squeeze_stream):
+    return None
 
 ''' Fetu Dice '''
 

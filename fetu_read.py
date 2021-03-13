@@ -2,7 +2,7 @@ import os
 import sys
 from fetu_cards import *
 
-''' KrypoMagick N Heka Fetu Cards version 'AAG' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAH' '''
 
 
 def main():
@@ -14,7 +14,7 @@ def main():
     hka_deck = generate_deck(deck_order)
     deck_msg = convert_deck_to_msg(hka_deck)
     ma_values, total, ma_total = get_deck_values(hka_deck)
-    glyphsA, glyphs8A, glyph_sums4A, glyph_total4A, glyph_sums8A, glyph_total8A = get_fetu_glyphs(hka_deck)
+    glyphsA, glyph_sums4A, glyph_total4A = get_fetu_glyphs(hka_deck)
     wiqa_seqFA = wiqa_sequence_forward(hka_deck)
     wiqa_seqBA = wiqa_sequence_backA(hka_deck)
     wiqa_seqBAB = wiqa_sequence_backB(hka_deck)
@@ -29,7 +29,12 @@ def main():
     print("Fetu Binary Sequences: ")
     print(glyphsA, glyph_sums4A, glyph_total4A)
 
-    signatureA, signatureB = get_deck_signature(glyph_total4A, glyph_total8A)
+    hexsigintA, hexsig_hexA, bin_msg = get_fetu_binary_message(hka_deck)
+    print("Fetu Hex/Binary Signatures: ")
+    print(hexsig_hexA, hexsigintA, bin_msg)
+    print("\n")
+
+    signatureA, signatureB = get_deck_signature(glyph_total4A, hexsigintA)
     print("Fetu Signatures (A/B): ")
     print(signatureA, signatureB)
 
@@ -37,12 +42,7 @@ def main():
     print("Nearest prime to Signature B: ")
     print(p)
 
-    hexsigA, hexsigintA = deck_to_hexstring(hka_deck)
-    print("Fetu Hex/Binary Signatures: ")
-    print(hexsigA, hexsigintA)
-    print("\n")
-
-    max_bin, bin_total, max_hex, max_dec, fetu_total, fetu_totals, ovr_dec, ovr_dec_dbl, ovr_dec_dbl_hex, max_squeeze_dec, max_squeeze_hex, super_max_dec, super_max_hex = fetu_max_entropy(hka_deck)
+    max_bin, bin_total, max_hex, max_dec, fetu_total, fetu_totals, ovr_dec, ovr_dec_dbl, ovr_dec_dbl_hex, max_squeeze_dec, max_squeeze_hex = fetu_max_entropy(hka_deck)
     print("Max Entropy Function Report --- ")
     print("--- 416 bit entropy extraction --- ")
     print("Hex String: ", max_hex)
@@ -56,6 +56,4 @@ def main():
     print("Overdrive Double Hex String: ", str(ovr_dec_dbl_hex))
     print("Max Squeeze Decimal: ", str(max_squeeze_dec))
     print("Max Squeeze Hex String: ", str(max_squeeze_hex))
-    print("Super Max Squeeze Decimal: ", str(super_max_dec))
-    print("Super Max Squeeze Hex String: ", str(super_max_hex))
 main()
