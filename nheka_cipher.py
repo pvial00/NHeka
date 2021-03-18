@@ -46,7 +46,7 @@ class NHekaCipher:
             j = k[j]
             k[j] = (k[j] - k[c]) % self.modulus
             output = (k[j] + k[k[j]]) % self.modulus
-            sub = (char + output) % self.modulus
+            sub = (char - output) % self.modulus
             ptxt.append(sub)
             c = (c + 1) % self.modulus
         c = 0

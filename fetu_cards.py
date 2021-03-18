@@ -1,7 +1,7 @@
 import os
 import sys
 
-''' KrypoMagick N Heka Fetu Cards version 'AAH' '''
+''' KrypoMagick N Heka Fetu Cards version 'AAG' '''
 
 
 spade_value = 20
@@ -424,7 +424,7 @@ def fetu_max_entropy(deck):
     max_dec = int("0x"+max_hex, 0)
     ovr_dec = pow(fetu_total, binary_total, max_dec)
     ovr_dec_dbl = ovr_dec * 2
-    ovr_dec_dbl_hex = hex(ovr_dec_dbl)
+    ovr_dec_dbl_hex = hex(ovr_dec_dbl)[2:]
     hex_arr = []
     for v in binary_values_dbl:
         hexv = hex(v)[2:]
